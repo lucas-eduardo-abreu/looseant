@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>Matches - LooseInventory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 24px; }
+      .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+      .title { font-weight: 700; margin-bottom: 6px; }
+      .meta { color: #555; font-size: 14px; margin-bottom: 10px; }
+      ul { margin: 0; padding-left: 18px; }
+      .empty { color: #888; font-style: italic; }
+      .badge { display:inline-block; padding:2px 8px; border:1px solid #ddd; border-radius:999px; font-size:12px; margin-left:6px; color:#444; }
+      a { color: inherit; }
+      .top { display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; }
+    </style>
+  </head>
+  <body>
+    <div class="top">
+      <h1 style="margin:0;">Matches</h1>
+      <div>
+        <span class="badge">{{ request.user.username }}</span>
+        <a class="badge" href="/admin/">Admin</a>
+        <a class="badge" href="/accounts/logout/">Sair</a>
+      </div>
+    </div>
+
+    {% if rows %}
+      {% for row in rows %}
+        <div class="card">
+          <div class="title">
+            {{ row.want.specified_item.item.name }}
+          </div>
+          <div class="meta">
+            Quer: <b>{{ row.want.user.username }}</b>
+            <span class="badge">{{ row.want.specified_item }}</span>
+            {% if row.want.status %}<span class="badge">{{ row.want.status }}</span>{% endif %}
+          </div>
+
+          {% if row.have_list %}
+            <div><b>Quem tem (cobre os requisitos):</b></div>
+            <ul>
+              {% for have in row.have_list %}
+                <li>
+                  <b>{{ have.user.username }}</b>
+                  <span class="badge">{{ have.specified_item }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <div class="empty">Ninguém tem (ainda) algo que cubra esse want.</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="empty">Sem wants abertos ainda.</p>
+    {% endif %}
+  </body>
+</html>
