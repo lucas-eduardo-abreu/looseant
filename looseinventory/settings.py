@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 MY_APPS = ['looseinventory.core.apps.CoreConfig', 'looseinventory.inventory.apps.InventoryConfig']
 
-EXTRA_APPS = []
+EXTRA_APPS = ['django_extensions']
 
 INSTALLED_APPS += MY_APPS
 INSTALLED_APPS += EXTRA_APPS
